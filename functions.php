@@ -16,7 +16,7 @@ spl_autoload_register( function($classname) {
     
     $vendor     = str_replace( 'makeitworkpress' . DIRECTORY_SEPARATOR, '', $class );
     $vendor     = 'makeitworkpress' . DIRECTORY_SEPARATOR . preg_replace( '/\//', '/src/', $vendor, 1 ); // Replace the first slash for the src folder
-    $vendors    = dirname(__FILE__) .  DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . $vendor . '.php';
+    $vendors    = get_template_directory() .  DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . $vendor . '.php';
     
     if( file_exists($classes) ) {
         require_once( $classes );
