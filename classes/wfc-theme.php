@@ -36,11 +36,11 @@ class WFC_Theme {
      */
     private function launch() {
 
-        // Load our configurations
-        require_once( get_stylesheet_directory() . '/config/configurations.php' );
-
         // Loads our parent
         $parent = Waterfall::instance();
+
+        // Load our configurations
+        require_once( get_stylesheet_directory() . '/config/configurations.php' );            
 
         // Only a set of predefined configurations can be added
         foreach( $configurations as $name => $configurations ) {
