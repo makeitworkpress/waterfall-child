@@ -7,23 +7,35 @@
 /**
  * Registers the autoloading for theme classes
  */
-spl_autoload_register( function($classname) {
+spl_autoload_register( function($className) {
     
-    $class      = str_replace( '\\', DIRECTORY_SEPARATOR, str_replace( '_', '-', strtolower($classname) ) );
+    $calledClass    = str_replace( '\\', DIRECTORY_SEPARATOR, str_replace( '_', '-', strtolower($className) ) );
+    $parentDir      = get_template_directory() . DIRECTORY_SEPARATOR;
     
-    $classes    = get_template_directory() .  DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR . $class . '.php';
-    $child      = get_stylesheet_directory() .  DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR . $class . '.php';
+    // Require main parent classes
+    $parentClass    = $parentDir . 'classes' . DIRECTORY_SEPARATOR . $calledClass . '.php';
+
+    if( file_exists($parentClass) ) {
+        require_once( $parentClass );
+        return;
+    } 
+
+    // Require child theme classes
+    $childClass     = get_stylesheet_directory() . DIRECTORY_SEPARATOR . 'classes' . DIRECTORY_SEPARATOR . $calledClass . '.php';
+
+    if( file_exists($childClass) ) {
+        require_once( $childClass );
+        return;
+    }
     
-    $vendor     = str_replace( 'makeitworkpress' . DIRECTORY_SEPARATOR, '', $class );
-    $vendor     = 'makeitworkpress' . DIRECTORY_SEPARATOR . preg_replace( '/\//', '/src/', $vendor, 1 ); // Replace the first slash for the src folder
-    $vendors    = get_template_directory() .  DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . $vendor . '.php';
-    
-    if( file_exists($classes) ) {
-        require_once( $classes );
-    } elseif( file_exists($child) ) {
-        require_once( $child );    
-    } elseif( file_exists($vendors) ) {
-        require_once( $vendors );    
+    // Require Vendor (composer) classes
+    $classNames     = explode(DIRECTORY_SEPARATOR, $calledClass);
+    array_splice($classNames, 2, 0, 'src');
+
+    $vendorClass    = $parentDir . 'vendor' . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $classNames) . '.php';
+
+    if( file_exists($vendorClass) ) {
+        require_once( $vendorClass );    
     }
    
 } );
