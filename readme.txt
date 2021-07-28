@@ -1,4 +1,4 @@
-=== Twenty Twenty-One ===
+=== Waterfall Child Theme ===
 Contributors: makeitworkpress
 Requires at least: 5.3
 Tested up to: 5.8
