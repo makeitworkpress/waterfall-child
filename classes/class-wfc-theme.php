@@ -45,7 +45,7 @@ class WFC_Theme {
         // Only a set of predefined configurations can be added
         foreach( $configurations as $name => $configurations ) {
 
-            if( ! in_array($name, ['register', 'options', 'enqueue', 'elementor']) ) {
+            if( ! in_array($name, ['register', 'routes', 'options', 'enqueue', 'elementor']) ) {
                 continue;
             } 
 
