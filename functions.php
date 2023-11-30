@@ -8,5 +8,5 @@
  * Priority 5 is required so that configurations can still be altered before the parent theme adds them
  */
 add_action('after_setup_theme', function() {
-    $theme = WFC_Theme::instance();
+    WFC_Theme::instance();
 }, 5);
